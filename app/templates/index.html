@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPL Score Prediction</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">IPL Score Prediction</h1>
+    <form method="post" class="row g-3" id="predictionForm">
+        <div class="col-md-6">
+            <label class="form-label">Batting Team</label>
+            <select name="bat_team" id="bat_team" class="form-select" required>
+                {% for team in bat_teams %}
+                <option value="{{ team }}">{{ team }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Bowling Team</label>
+            <select name="bowl_team" id="bowl_team" class="form-select" required>
+                {% for team in bowl_teams %}
+                <option value="{{ team }}">{{ team }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Venue</label>
+            <select name="venue" class="form-select" required>
+                {% for v in venues %}
+                <option value="{{ v }}">{{ v }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Batsman</label>
+            <select name="batsman" id="batsman" class="form-select" required>
+                <!-- Options will be populated by JS -->
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Bowler</label>
+            <select name="bowler" id="bowler" class="form-select" required>
+                <!-- Options will be populated by JS -->
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Current Runs</label>
+            <input type="number" name="runs" class="form-control" min="0" required>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Wickets Lost</label>
+            <input type="number" name="wickets" class="form-control" min="0" max="10" required>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Overs Bowled</label>
+            <input type="number" name="overs" class="form-control" min="0" max="20" step="0.1" required>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Striker Index</label>
+            <select name="striker" class="form-select" required>
+                {% for i in range(1, 12) %}
+                <option value="{{ i }}">{{ i }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Non-Striker Index</label>
+            <select name="non_striker" class="form-select" required>
+                {% for i in range(1, 12) %}
+                <option value="{{ i }}">{{ i }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Runs in Last 5 Overs</label>
+            <input type="number" name="runs_last_5" class="form-control" min="0" required>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Wickets in Last 5 Overs</label>
+            <input type="number" name="wickets_last_5" class="form-control" min="0" required>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Predict Score</button>
+        </div>
+    </form>
+    {% if prediction is not none %}
+    <div class="alert alert-success mt-4">
+        <h4>Predicted Total Score: {{ prediction|round(2) }}</h4>
+    </div>
+    {% endif %}
+</div>
+<script>
+// Player lists by team (to be filled by Flask)
+const teamBatsmen = {{ team_batsmen|tojson }};
+const teamBowlers = {{ team_bowlers|tojson }};
+
+function updateBatsmen() {
+    const batTeam = document.getElementById('bat_team').value;
+    const batsmanSelect = document.getElementById('batsman');
+    batsmanSelect.innerHTML = '';
+    (teamBatsmen[batTeam] || []).forEach(function(player) {
+        const opt = document.createElement('option');
+        opt.value = player;
+        opt.innerHTML = player;
+        batsmanSelect.appendChild(opt);
+    });
+}
+function updateBowlers() {
+    const bowlTeam = document.getElementById('bowl_team').value;
+    const bowlerSelect = document.getElementById('bowler');
+    bowlerSelect.innerHTML = '';
+    (teamBowlers[bowlTeam] || []).forEach(function(player) {
+        const opt = document.createElement('option');
+        opt.value = player;
+        opt.innerHTML = player;
+        bowlerSelect.appendChild(opt);
+    });
+}
+function preventSameTeam() {
+    const batTeam = document.getElementById('bat_team').value;
+    const bowlTeamSelect = document.getElementById('bowl_team');
+    Array.from(bowlTeamSelect.options).forEach(opt => {
+        opt.disabled = (opt.value === batTeam);
+    });
+    if (batTeam === bowlTeamSelect.value) {
+        // Auto-select a different team
+        for (let opt of bowlTeamSelect.options) {
+            if (!opt.disabled) {
+                bowlTeamSelect.value = opt.value;
+                break;
+            }
+        }
+        updateBowlers();
+    }
+}
+document.getElementById('bat_team').addEventListener('change', function() {
+    updateBatsmen();
+    preventSameTeam();
+});
+document.getElementById('bowl_team').addEventListener('change', function() {
+    updateBowlers();
+    preventSameTeam();
+});
+window.onload = function() {
+    updateBatsmen();
+    updateBowlers();
+    preventSameTeam();
+};
+</script>
+</body>
+</html> 

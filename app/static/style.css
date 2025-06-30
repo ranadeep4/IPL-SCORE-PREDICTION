@@ -1,0 +1,19 @@
+body {
+    background: #f8f9fa;
+}
+h1 {
+    color: #1e3d59;
+    font-weight: bold;
+}
+.btn-primary {
+    background-color: #ff9800;
+    border: none;
+}
+.btn-primary:hover {
+    background-color: #e65100;
+}
+.alert-success {
+    background-color: #e0ffe0;
+    color: #256029;
+    border: 1px solid #b2ffb2;
+} 

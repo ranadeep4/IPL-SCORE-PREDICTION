@@ -1,8 +1,0 @@
-Model Results:
-LinearRegression: Train MAE=10.15, Test MAE=10.02, Train R2=75.05%, Test R2=75.10%
-RandomForest: Train MAE=0.21, Test MAE=0.55, Train R2=99.98%, Test R2=99.88%
-GradientBoosting: Train MAE=2.93, Test MAE=2.99, Train R2=98.14%, Test R2=98.03%
-XGBoost: Train MAE=0.99, Test MAE=1.16, Train R2=99.81%, Test R2=99.71%
-Keras: Train MAE=1.96, Test MAE=1.93, Train R2=99.18%, Test R2=99.18%
-
-Best model: RandomForest

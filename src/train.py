@@ -113,7 +113,7 @@ os.makedirs('saved_models', exist_ok=True)
 if best_model_name == 'Keras':
     best_model.save('saved_models/model.pkl')
 else:
-    joblib.dump(best_model, 'saved_models/model.pkl')
+    joblib.dump(best_model, 'saved_models/model.pkl',protocol=4)
 
 # Save the model type, encoders, and scaler
 with open('saved_models/model_type.txt', 'w') as f:
@@ -121,11 +121,11 @@ with open('saved_models/model_type.txt', 'w') as f:
     for line in results_text:
         f.write(line + "\n")
     f.write(f"\nBest model: {best_model_name}\n")
-joblib.dump(label_encoders, 'saved_models/label_encoders.pkl')
-joblib.dump(scaler, 'saved_models/scaler.pkl')
+joblib.dump(label_encoders, 'saved_models/label_encoders.pkl',protocol=4)
+joblib.dump(scaler, 'saved_models/scaler.pkl',protocol=4)
 
 # Save feature columns for prediction
-joblib.dump(feature_cols, 'saved_models/feature_cols.pkl')
+joblib.dump(feature_cols, 'saved_models/feature_cols.pkl',protocol=4)
 
 print(f"\nModel training completed!")
 print(f"Best model ({best_model_name}) saved with engineered features.")

@@ -5,7 +5,7 @@ from utils import clean_data, engineer_features
 from flask import Flask, render_template, request
 import pandas as pd
 import joblib
-from tensorflow import keras
+# from tensorflow import keras
 from collections import defaultdict
 
 app = Flask(__name__)
@@ -27,7 +27,8 @@ SCALER_PATH = os.path.join(os.path.dirname(__file__), '../saved_models/scaler.pk
 FEATURE_COLS_PATH = os.path.join(os.path.dirname(__file__), '../saved_models/feature_cols.pkl')
 
 if model_type == 'Keras':
-    model = keras.models.load_model(MODEL_PATH)
+    # model = keras.models.load_model(MODEL_PATH)
+    pass
 else:
     model = joblib.load(MODEL_PATH)
 label_encoders = joblib.load(ENCODERS_PATH)

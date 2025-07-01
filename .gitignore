@@ -8,8 +8,8 @@ __pycache__/
 *.env
 *.venv
 .DS_Store
-saved_models/*.h5
-saved_models/*.pkl
+# saved_models/*.h5
+# saved_models/*.pkl
 *.sqlite3
 .idea/
 .vscode/ 

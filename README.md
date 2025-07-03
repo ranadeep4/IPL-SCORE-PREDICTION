@@ -11,7 +11,7 @@ This project predicts IPL cricket match scores using a neural network model buil
 - `notebooks/EDA_and_model_dev.ipynb`: EDA and initial exploration
 - `src/`: Source code for training, prediction, and utilities
 - `saved_models/`: Trained model and encoders
-- `app/`: Streamlit app for user interaction
+- `app/`: Flask app for user interaction
 
 ## Setup
 1. Create and activate the conda environment:

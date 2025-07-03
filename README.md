@@ -2,7 +2,9 @@
 
 This project predicts IPL cricket match scores using a neural network model built with Keras and TensorFlow. It includes EDA, model training, and a web app for predictions.
 
-[![Live on Render](https://img.shields.io/badge/Live-Render-blue)](https://ipl-score-predictor.onrender.com)
+## 🔗 Live Demo
+
+[Click here to view the live app](https://ipl-score-prediction-dxar.onrender.com/)
 
 
 ## Project Structure
